@@ -9,21 +9,22 @@ return (function(gethui)
   local bg = Instance.new('Frame')
   local UICorner = Instance.new('UICorner')
   local UIGradient = Instance.new('UIGradient')
+  local Blur = Instance.new('ImageLabel')
   local StatText = Instance.new('TextLabel')
   local Frame = Instance.new('Frame')
   local UICorner_2 = Instance.new('UICorner')
   local TimeText = Instance.new('TextLabel')
   local Frame_2 = Instance.new('Frame')
   local UICorner_3 = Instance.new('UICorner')
-  local Time = Instance.new('ImageLabel')
-  local UICorner_4 = Instance.new('UICorner')
-  local Counter = Instance.new('TextLabel')
-  local UIAspectRatioConstraint = Instance.new('UIAspectRatioConstraint')
   local Stats = Instance.new('Frame')
   local Stat1 = Instance.new('TextLabel')
   local UIListLayout = Instance.new('UIListLayout')
   local Stat2 = Instance.new('TextLabel')
   local Stat3 = Instance.new('TextLabel')
+  local Time = Instance.new('ImageLabel')
+  local UICorner_4 = Instance.new('UICorner')
+  local Counter = Instance.new('TextLabel')
+  local UIAspectRatioConstraint = Instance.new('UIAspectRatioConstraint')
 
   -- Properties:
 
@@ -41,7 +42,6 @@ return (function(gethui)
   bg.Name = 'bg'
   bg.Parent = Container
   bg.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-  bg.BackgroundTransparency = 0 -- 0.150
   bg.Size = UDim2.new(1, 0, 1, 0)
   bg.ZIndex = 0
 
@@ -53,6 +53,16 @@ return (function(gethui)
   }
   UIGradient.Rotation = 43
   UIGradient.Parent = bg
+
+  Blur.Name = 'Blur'
+  Blur.Parent = bg
+  Blur.AnchorPoint = Vector2.new(0.5, 0.5)
+  Blur.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+  Blur.BackgroundTransparency = 1.000
+  Blur.Position = UDim2.new(0.5, 0, 0.5, 0)
+  Blur.Size = UDim2.new(0, 988, 0, 904)
+  Blur.ZIndex = -3
+  Blur.Image = 'rbxassetid://10568620742'
 
   StatText.Name = 'StatText'
   StatText.Parent = Container
@@ -98,34 +108,6 @@ return (function(gethui)
 
   UICorner_3.CornerRadius = UDim.new(1, 0)
   UICorner_3.Parent = Frame_2
-
-  Time.Name = 'Time'
-  Time.Parent = Container
-  Time.AnchorPoint = Vector2.new(1, 1)
-  Time.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-  Time.BackgroundTransparency = 1.000
-  Time.Position = UDim2.new(0.955417633, 0, 0.946275294, 0)
-  Time.Size = UDim2.new(0, 93, 0, 95)
-  Time.Image = 'rbxassetid://10567135619'
-
-  UICorner_4.CornerRadius = UDim.new(1, 0)
-  UICorner_4.Parent = Time
-
-  Counter.Name = 'Counter'
-  Counter.Parent = Time
-  Counter.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-  Counter.BackgroundTransparency = 1.000
-  Counter.BorderSizePixel = 0
-  Counter.Position = UDim2.new(-0.00882816315, 0, -0.0199304521, 0)
-  Counter.Size = UDim2.new(1, 0, 1, 0)
-  Counter.ZIndex = 2
-  Counter.Font = Enum.Font.SourceSansLight
-  Counter.Text = '0:00'
-  Counter.TextColor3 = Color3.fromRGB(255, 255, 255)
-  Counter.TextSize = 24.000
-
-  UIAspectRatioConstraint.Parent = Time
-  UIAspectRatioConstraint.DominantAxis = Enum.DominantAxis.Height
 
   Stats.Name = 'Stats'
   Stats.Parent = Container
@@ -177,6 +159,34 @@ return (function(gethui)
   Stat3.TextSize = 14.000
   Stat3.TextWrapped = true
   Stat3.TextXAlignment = Enum.TextXAlignment.Left
+
+  Time.Name = 'Time'
+  Time.Parent = Container
+  Time.AnchorPoint = Vector2.new(1, 1)
+  Time.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+  Time.BackgroundTransparency = 1.000
+  Time.Position = UDim2.new(0.955417633, 0, 0.946275294, 0)
+  Time.Size = UDim2.new(0, 93, 0, 95)
+  Time.Image = 'rbxassetid://10567135619'
+
+  UICorner_4.CornerRadius = UDim.new(1, 0)
+  UICorner_4.Parent = Time
+
+  Counter.Name = 'Counter'
+  Counter.Parent = Time
+  Counter.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+  Counter.BackgroundTransparency = 1.000
+  Counter.BorderSizePixel = 0
+  Counter.Position = UDim2.new(-0.00882816315, 0, -0.0199304521, 0)
+  Counter.Size = UDim2.new(1, 0, 1, 0)
+  Counter.ZIndex = 2
+  Counter.Font = Enum.Font.SourceSansLight
+  Counter.Text = '0:00'
+  Counter.TextColor3 = Color3.fromRGB(255, 255, 255)
+  Counter.TextSize = 24.000
+
+  UIAspectRatioConstraint.Parent = Time
+  UIAspectRatioConstraint.DominantAxis = Enum.DominantAxis.Height
   -- Return
   return StatisticsGUI
 end)(gethui)
