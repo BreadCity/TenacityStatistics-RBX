@@ -48,6 +48,67 @@ export class APIClass {
       }
     });
   }
+  _ConnectToDisconnectScreen(){
+    const uiService = game.GetService('GuiService');
+    let run: (object: TextLabel) => void = ()=>undefined;
+    const Connection2: RBXScriptConnection[] = [];
+    const Connection = game.GetService('CoreGui').DescendantAdded.Connect((desc)=>{
+      if (desc.IsA('TextLabel') && desc.FindFirstAncestor('MessageArea') && !desc.FindFirstAncestor('DevConsoleMaster')) {
+        run(desc);
+        const ScriptSignal = desc.Changed as RBXScriptSignal;
+        Connection2.push(ScriptSignal.Connect(()=>{
+          run(desc);
+        }));
+      }
+    });
+    let caught = false;
+    run = (object: TextLabel)=>{
+      const find = ()=>string.find(object.Text, 'You were kicked');
+      if ((object.Name === 'ErrorMessage' || find()[0]) && this.ShouldShowTimeOnDisconnectScreen && !caught){
+        if (!find()[0])
+          while (object && !find()[0])
+            task.wait(1);
+        caught = true;
+        Connection.Disconnect();
+        Connection2.forEach(v=>v.Disconnect());
+        const DisconnectedText = object.Text;
+        if (this.ShouldReplaceDisconnectScreen) {
+          // TODO: Replace this with UI Creration Function & whatnot
+          print('got kicked\nreason:', DisconnectedText);
+          task.wait(5);
+          uiService.ClearError();
+        } else {
+          // object.RichText = true;
+          // object.Text = `${DisconnectedText}<br/>-----------------<br/>Playtime: ${this.FormatTime()}`;
+          const ErrorPrompt = object.FindFirstAncestor('ErrorPrompt');
+          if (ErrorPrompt && ErrorPrompt.IsA('Frame')){
+          // @ts-ignore
+            for (const iterator of ErrorPrompt.GetDescendants())
+              if (iterator.Name === 'ErrorTitle' && iterator.IsA('TextLabel'))
+                iterator.Text = `${iterator.Text} | Playtime: ${this.FormatTime(true)}`;
+            // Customize Error Message
+            ErrorPrompt.BackgroundColor3 = new Color3(1, 1, 1);
+            const Gradient = new Instance('UIGradient');
+            Gradient.Color = new ColorSequence([
+              new ColorSequenceKeypoint(0.00, Color3.fromRGB(155, 130, 187)),
+              new ColorSequenceKeypoint(1.00, Color3.fromRGB(97, 153, 212))
+            ]);
+            Gradient.Parent = ErrorPrompt;
+            Gradient.Rotation = 45;
+            const UICorner = new Instance('UICorner');
+            UICorner.Parent = ErrorPrompt;
+            const Background = new Instance('ImageLabel');
+            Background.ZIndex = ErrorPrompt.ZIndex - 1;
+            Background.AnchorPoint = new Vector2(0.5, 0.5);
+            Background.Position = new UDim2(0.5, 0, 0.5, 0);
+            Background.BackgroundTransparency = 1;
+            Background.Parent = ErrorPrompt;
+            object.TextColor3 = Color3.fromRGB(224, 224, 224);
+          }
+        }
+      }
+    };
+  }
   /** Sets the position of the ui */
   SetPosition(Pos: UDim2) {
     this._ui.Container.Position = Pos;
@@ -60,13 +121,15 @@ export class APIClass {
   SetStat(name:string, value:string) {
     const slot = this._slots[name];
     if (!slot)
-      return error(`slot does not exist: ${name}`);
+      return error(`stat not bound to slow: ${name}`);
     const slotLabel = this._getslot(slot);
     slotLabel.Text = this._stattemplate.format(name, value);
     slotLabel.RichText = true;
   }
   /** Binds {@link name} to statistics slot {@link slot} so it can be used in {@link SetStat} */
   SetStatSlot(slot:1|2|3, name:string, value = 'No Value') {
+    if (slot < 1 || slot > 3)
+      error(`expected slot to be in range 1-3, got ${slot}`);
     this._slots[name] = slot;
     this.SetStat(name, value);
   }
@@ -77,10 +140,8 @@ export class APIClass {
     this.Time = this.Time + delta;
     this.UpdateTimer();
   }
-  /** Updates the {@link Time Playtime} Timer */
-  UpdateTimer(force = false) {
-    if (!force && this.Time - this._lastRanAt < 0.5)
-      return;
+  /** Formats {@link Time Playtime} */
+  FormatTime(ForceIncludeMinutes = false){
     const dt = DateTime.fromUnixTimestamp(this.Time);
     const Hour = dt.FormatUniversalTime('HH', 'en-GB');
     const Minute = dt.FormatUniversalTime('mm', 'en-GB');
@@ -88,9 +149,16 @@ export class APIClass {
     let Final = '';
     if (Hour !== '00')
       Final = `${Hour}:`;
-    if (Final || Minute !== '00')
+    if (Final || Minute !== '00' || ForceIncludeMinutes)
       Final = `${Final}${Minute}:`;
     Final = `${Final}${Second}`;
+    return Final;
+  }
+  /** Updates the {@link Time Playtime} Timer */
+  UpdateTimer(force = false) {
+    if (!force && this.Time - this._lastRanAt < 0.5)
+      return;
+    const Final = this.FormatTime();
     this._counter.Text = Final;
     this._playtimeChangedEvent.Fire(this.Time);
   }
@@ -108,6 +176,10 @@ export class APIClass {
   GetTimer(){
     return this.Time;
   }
+  /** Defines if we should show the playtime on the disconnected screen */
+  ShouldShowTimeOnDisconnectScreen = true;
+  /** Defines if we should use a custom UI to replace the disconnect screen | Requires {@link ShouldShowTimeOnDisconnectScreen}=true | TODO: Implement this */
+  ShouldReplaceDisconnectScreen = false;
   /** Fires when the playtime text updates | Fires with the amount of seconds (number) */
   TimeChanged = this._playtimeChangedEvent.Event;
   /** Fires when the playtime text updates | Fires with the amount of seconds (number) */
@@ -126,6 +198,8 @@ export class APIClass {
     this._initdrag();
     // Define Utility
     this.Utility = new Util(this);
+    // Connect to Disconnect Screen
+    this._ConnectToDisconnectScreen();
   }
 }
 const api = new APIClass;

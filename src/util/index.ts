@@ -13,7 +13,6 @@ export default class Util {
   GetLoader(){
     return CachedHTTP.Get('https://tenacity-statistics-rbx.astolfo.gay/public/loader.lua');
   }
-  /** Ensures a directory exists */
   /** Persist Playtime */
   PersistPlaytime(ShouldQueueLoader = true){
     if (this._queued)
