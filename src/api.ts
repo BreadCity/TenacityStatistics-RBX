@@ -60,6 +60,8 @@ export class APIClass {
     this.UpdateTimer(true);
   }
   constructor(){
+    this._ui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
+    this._ui.Container.ZIndex = 6969;
     // Setup Timer
     game.GetService('RunService').RenderStepped.Connect((delta:number)=>this.TickTimer(delta));
     this.ResetTimer();
@@ -67,6 +69,7 @@ export class APIClass {
     const InputService = game.GetService('UserInputService'),
       TweenService = game.GetService('TweenService');
     const Container = this._ui.Container;
+    const Hijacker = Container.ClickHijacker;
     let BeginDragUIPosition = Container.Position;
 
     const _TweenInfo = new TweenInfo(0.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out);
@@ -85,7 +88,7 @@ export class APIClass {
         }
     });
     // Setup Click Handler
-    InputService.InputBegan.Connect((inputObj)=>{
+    Hijacker.InputBegan.Connect((inputObj)=>{
       if (inputObj.UserInputType === Enum.UserInputType.MouseButton1 || inputObj.UserInputType === Enum.UserInputType.Touch) {
         IsDragging = true;
         BeginDragPosition = inputObj.Position;

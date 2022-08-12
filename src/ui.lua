@@ -25,6 +25,7 @@ return (function(gethui)
   local UICorner_4 = Instance.new('UICorner')
   local Counter = Instance.new('TextLabel')
   local UIAspectRatioConstraint = Instance.new('UIAspectRatioConstraint')
+  local ClickHijacker = Instance.new('Frame')
 
   -- Properties:
 
@@ -38,12 +39,13 @@ return (function(gethui)
   Container.BorderSizePixel = 0
   Container.Position = UDim2.new(0.0326906964, 0, 0.145654827, 0)
   Container.Size = UDim2.new(0, 342, 0, 149)
+  Container.ZIndex = 5000
 
   bg.Name = 'bg'
   bg.Parent = Container
   bg.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
   bg.Size = UDim2.new(1, 0, 1, 0)
-  bg.ZIndex = 0
+  bg.ZIndex = 4999
 
   UICorner.Parent = bg
 
@@ -70,6 +72,7 @@ return (function(gethui)
   StatText.BackgroundTransparency = 1.000
   StatText.Position = UDim2.new(0.0326632671, 0, 0.0414201356, 0)
   StatText.Size = UDim2.new(0, 105, 0, 33)
+  StatText.ZIndex = 5001
   StatText.Font = Enum.Font.SourceSansBold
   StatText.Text = 'Statistics'
   StatText.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -93,6 +96,7 @@ return (function(gethui)
   TimeText.BackgroundTransparency = 1.000
   TimeText.Position = UDim2.new(0.959563851, 0, 0.0414201356, 0)
   TimeText.Size = UDim2.new(0, 102, 0, 33)
+  TimeText.ZIndex = 5001
   TimeText.Font = Enum.Font.SourceSansBold
   TimeText.Text = 'Playtime'
   TimeText.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -116,12 +120,14 @@ return (function(gethui)
   Stats.BackgroundTransparency = 0.999
   Stats.Position = UDim2.new(0.0326632671, 0, 0.946275294, 0)
   Stats.Size = UDim2.new(0, 209, 0, 93)
+  Stats.ZIndex = 5001
 
   Stat1.Name = 'Stat1'
   Stat1.Parent = Stats
   Stat1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
   Stat1.BackgroundTransparency = 1.000
   Stat1.Size = UDim2.new(1, 0, 0, 25)
+  Stat1.ZIndex = 5001
   Stat1.Font = Enum.Font.SourceSansLight
   Stat1.Text = ''
   Stat1.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -139,6 +145,7 @@ return (function(gethui)
   Stat2.BackgroundTransparency = 1.000
   Stat2.Position = UDim2.new(-1.05741632, 0, -2.26881719, 0)
   Stat2.Size = UDim2.new(1, 0, 0, 25)
+  Stat2.ZIndex = 5001
   Stat2.Font = Enum.Font.SourceSansLight
   Stat2.Text = ''
   Stat2.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -152,6 +159,7 @@ return (function(gethui)
   Stat3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
   Stat3.BackgroundTransparency = 1.000
   Stat3.Size = UDim2.new(1, 0, 0, 25)
+  Stat3.ZIndex = 5001
   Stat3.Font = Enum.Font.SourceSansLight
   Stat3.Text = ''
   Stat3.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -167,6 +175,7 @@ return (function(gethui)
   Time.BackgroundTransparency = 1.000
   Time.Position = UDim2.new(0.955417633, 0, 0.946275294, 0)
   Time.Size = UDim2.new(0, 93, 0, 95)
+  Time.ZIndex = 5001
   Time.Image = 'rbxassetid://10567135619'
 
   UICorner_4.CornerRadius = UDim.new(1, 0)
@@ -179,7 +188,7 @@ return (function(gethui)
   Counter.BorderSizePixel = 0
   Counter.Position = UDim2.new(-0.00882816315, 0, -0.0199304521, 0)
   Counter.Size = UDim2.new(1, 0, 1, 0)
-  Counter.ZIndex = 2
+  Counter.ZIndex = 5001
   Counter.Font = Enum.Font.SourceSansLight
   Counter.Text = '0:00'
   Counter.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -187,6 +196,13 @@ return (function(gethui)
 
   UIAspectRatioConstraint.Parent = Time
   UIAspectRatioConstraint.DominantAxis = Enum.DominantAxis.Height
+
+  ClickHijacker.Name = 'ClickHijacker'
+  ClickHijacker.Parent = Container
+  ClickHijacker.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+  ClickHijacker.BackgroundTransparency = 0.990
+  ClickHijacker.Size = UDim2.new(1, 0, 1, 0)
+  ClickHijacker.ZIndex = 5003
   -- Return
   return StatisticsGUI
 end)(gethui)

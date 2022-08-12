@@ -17,6 +17,7 @@ interface Container extends Frame {
   }),
   StatText: TextLabel,
   TimeText: TextLabel,
+  ClickHijacker: Frame,
 }
 interface StatisticsGUI extends ScreenGui {
   Container: Container
