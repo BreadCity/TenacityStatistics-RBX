@@ -7,6 +7,7 @@ export class APIClass {
   _slots: Record<string, 1|2|3> = {};
   _slottext: Record<string, string> = {};
   _stattemplate = '<b><font face="SourceSansSemibold">%s:</font></b> %s';
+  _playtimeChangedEvent: BindableEvent<(Playtime:number)=>any> = new Instance('BindableEvent');
   _getslot(slot:1|2|3){
     return this._ui.Container.Stats[`Stat${slot}`];
   }
@@ -91,6 +92,7 @@ export class APIClass {
       Final = `${Final}${Minute}:`;
     Final = `${Final}${Second}`;
     this._counter.Text = Final;
+    this._playtimeChangedEvent.Fire(this.Time);
   }
   /** Resets {@link Time Playtime} */
   ResetTimer(){
@@ -106,6 +108,10 @@ export class APIClass {
   GetTimer(){
     return this.Time;
   }
+  /** Fires when the playtime text updates | Fires with the amount of seconds (number) */
+  TimeChanged = this._playtimeChangedEvent.Event;
+  /** Fires when the playtime text updates | Fires with the amount of seconds (number) */
+  PlaytimeChanged = this.TimeChanged;
   /** Utility Class */
   Utility: Util;
   /** Constructor */

@@ -132,11 +132,11 @@ local function main()
   table.insert(output, 1, runtime)
   table.insert(output, 'init()')
 
-  -- if VERBOSE then
-  --   table.insert(output, 2, 'local START_TIME = os.clock()')
-  --   table.insert(output,
-  --                'print("[CI ' .. VERSION .. '] Generic Script run in " .. (os.clock() - START_TIME) * 1000 .. " ms")')
-  -- end
+  if VERBOSE then
+    table.insert(output, 2, 'local START_TIME = os.clock()')
+    table.insert(output,
+                 'print("[CI ' .. VERSION .. '] Generic Script run in " .. (os.clock() - START_TIME) * 1000 .. " ms")')
+  end
 
   -- Write to file
   remodel.createDirAll(string.match(OUTPUT_PATH, '^(.*)[/\\]'))

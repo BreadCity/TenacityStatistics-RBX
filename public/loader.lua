@@ -1,3 +1,4 @@
+if not game:IsLoaded() then game.Loaded:Wait() end
 if getgenv and getgenv().TenacityStatistics or _G.TenacityStatistics then
   return getgenv and getgenv().TenacityStatistics or _G.TenacityStatistics
 end

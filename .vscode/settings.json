@@ -18,6 +18,7 @@
     "iscclosure",
     "newcclosure",
     "getexecutorname",
-    "newlclosure"
+    "newlclosure",
+    "TenacityStatistics"
   ]
 }
