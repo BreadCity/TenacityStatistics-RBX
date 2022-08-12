@@ -1,4 +1,4 @@
-![Preview](http://tenacity-statistics-rbx.astolfo.gay/preview.png)
+![Preview](http://tenacity-statistics-rbx.astolfo.gay/preview.png?a=0)
 
 # Tenacity Statistics
 
