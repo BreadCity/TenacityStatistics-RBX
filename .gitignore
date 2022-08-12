@@ -3,3 +3,4 @@
 /include
 *.tsbuildinfo
 script.rbxm
+public/script.lua

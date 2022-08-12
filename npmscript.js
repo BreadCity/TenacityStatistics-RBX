@@ -26,7 +26,7 @@ remodel = `"${remodel}"`;
 
 const scripts = {
   'build': `${rojo} build default.project.json --output "script.rbxm"`,
-  'remodel': `${remodel} run "${path.resolve(process.cwd(), 'ci', 'bundle.lua')}" "${path.resolve(process.cwd(), 'public', 'script.lua')}" dev verbose`
+  'remodel': `${remodel} run "${path.resolve(process.cwd(), 'ci', 'bundle.lua')}" "${path.resolve(process.cwd(), 'public', 'script.lua')}" dev`
 };
 
 const data = scripts[script];
